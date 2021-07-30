@@ -1,6 +1,8 @@
 package com.org.jjdmn.bank.persistence;
 
 import com.org.jjdmn.bank.pojo.Transaction;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
  * @Date 2021/7/29
  * @Version 1.0
  **/
+@Component
+@Mapper
 public interface TransactionMapper {
     List<Transaction> queryByCondition(Transaction transaction);
 }

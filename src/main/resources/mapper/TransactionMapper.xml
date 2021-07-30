@@ -5,18 +5,18 @@
     <cache />
 
     <select id="queryByCondition" resultType="com.org.jjdmn.bank.pojo.Transaction">
-        select * from 'transaction'
+        select * from transaction
             <where>
-                <if test="payAccountId!=null">
+                <if test="payAccountId!=0">
                     and payAccountId=#{payAccountId}
                 </if>
-                <if test="recAccountId!=null">
+                <if test="recAccountId!=0">
                     and recAccountId=#{recAccountId}
                 </if>
                 <if test="transactionTime!=null">
-                    and transactionTime=#{transactionTime}
+                    and transactionTime like #{transactionTime}
                 </if>
-                <if test="transactionStatus!=null">
+                <if test="transactionStatus!=0">
                     and transactionStatus=#{transactionStatus}
                 </if>
             </where>

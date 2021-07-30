@@ -1,5 +1,8 @@
 package com.org.jjdmn.bank.pojo;
 
+import org.springframework.stereotype.Repository;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,7 +13,8 @@ import java.math.BigDecimal;
  * @Date 2021/7/29
  * @Version 1.0
  **/
-public class Transaction {
+@Repository
+public class Transaction implements Serializable {
     private String transactionNo;  //交易编号，UUID
     private long payAccountId;     //付款账户
     private long recAccountId;    //收款账户
@@ -64,5 +68,17 @@ public class Transaction {
 
     public void setTransactionStatus(int transactionStatus) {
         this.transactionStatus = transactionStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionNo='" + transactionNo + '\'' +
+                ", payAccountId=" + payAccountId +
+                ", recAccountId=" + recAccountId +
+                ", transactionTime='" + transactionTime + '\'' +
+                ", transactionAmount=" + transactionAmount +
+                ", transactionStatus=" + transactionStatus +
+                '}';
     }
 }

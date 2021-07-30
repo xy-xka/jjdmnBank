@@ -5,6 +5,7 @@ import com.org.jjdmn.bank.persistence.UserMapper;
 import com.org.jjdmn.bank.pojo.Transaction;
 import com.org.jjdmn.bank.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @Date 2021/7/29
  * @Version 1.0
  **/
+@Service
 public class TransactionServiceImpl implements TransactionService {
 
     //调用TransactionMapper
