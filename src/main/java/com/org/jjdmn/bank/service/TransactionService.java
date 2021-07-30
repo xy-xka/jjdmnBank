@@ -1,6 +1,7 @@
 package com.org.jjdmn.bank.service;
 
 import com.org.jjdmn.bank.pojo.Transaction;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

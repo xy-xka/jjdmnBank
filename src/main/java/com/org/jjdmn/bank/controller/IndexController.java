@@ -1,5 +1,8 @@
 package com.org.jjdmn.bank.controller;
 
+import com.org.jjdmn.bank.pojo.Transaction;
+import com.org.jjdmn.bank.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -17,6 +20,7 @@ public class IndexController {
     /*
     展示主页面，基本页面的跳转逻辑
      */
+
     @GetMapping("/") //展示主页面 index.html
     public String viewLogin() {
 

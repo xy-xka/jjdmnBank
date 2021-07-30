@@ -1,13 +1,19 @@
 package com.org.jjdmn.bank;
 
-import org.junit.jupiter.api.Test;
+import com.org.jjdmn.bank.pojo.Transaction;
+import com.org.jjdmn.bank.service.TransactionService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
-class BankApplicationTests {
+@SpringBootTest(classes = BankApplication.class)
+@RunWith(SpringRunner.class)
+public class BankApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
     }
 
 }

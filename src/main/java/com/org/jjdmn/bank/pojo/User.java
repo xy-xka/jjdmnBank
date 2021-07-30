@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @Date 2021/7/29
  * @Version 1.0
  **/
-public class User {
+public class User implements java.io.Serializable{
     private long userId;  //用户id
     private String username;      // 用户名
     private String password;      //  登录密码
@@ -55,5 +55,16 @@ public class User {
 
     public void setAccountList(ArrayList<Account> accountList) {
         this.accountList = accountList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", identityCard='" + identityCard + '\'' +
+                ", accountList=" + accountList +
+                '}';
     }
 }

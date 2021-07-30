@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @Date 2021/7/29
  * @Version 1.0
  **/
-public class Account {
+public class Account implements java.io.Serializable{
     private long accountId;   //账户id
     private String userId;    //用户id
     private String openTime;    //开户时间
@@ -64,5 +64,17 @@ public class Account {
 
     public void setAccountStatus(int accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", userId='" + userId + '\'' +
+                ", openTime='" + openTime + '\'' +
+                ", balance=" + balance +
+                ", payPwd='" + payPwd + '\'' +
+                ", accountStatus=" + accountStatus +
+                '}';
     }
 }
