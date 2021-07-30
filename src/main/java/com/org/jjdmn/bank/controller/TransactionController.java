@@ -2,9 +2,13 @@ package com.org.jjdmn.bank.controller;
 
 import com.org.jjdmn.bank.pojo.Transaction;
 import com.org.jjdmn.bank.service.TransactionService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -17,16 +21,23 @@ import java.util.List;
  * @Version 1.0
  **/
 @Controller
-@RequestMapping("/tran")
+@RequestMapping("tran")
 public class TransactionController {
 
     @Autowired
     private TransactionService service;
 
-    @RequestMapping("/query")
-    public String query(){
-        Transaction con = new Transaction();
-        con.setRecAccountId(111);
+    @GetMapping("table")
+    public String table(){
+        System.out.println("hhhhhhh ");
+        return "query_trans";
+    }
+    @RequestMapping(value = "/query", method = RequestMethod.POST)
+    public String query(@Param("payAccountId") Long payAccountId,
+                        @Param("recAccountId") Long recAccountId,
+                        @Param("transactionTime") String transactionTime,
+                        @Param("transactionStatus") int transactionStatus){
+        Transaction con = new Transaction(null,payAccountId, recAccountId, transactionTime,null, transactionStatus);
         List<Transaction> transactions = service.getTransactionList(con);
 
         transactions.forEach(System.out::println);

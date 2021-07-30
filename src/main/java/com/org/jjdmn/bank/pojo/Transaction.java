@@ -22,6 +22,18 @@ public class Transaction implements Serializable {
     private BigDecimal transactionAmount;    //交易金额
     private int transactionStatus;     //交易状态
 
+    public Transaction() {
+    }
+
+    public Transaction(String transactionNo, long payAccountId, long recAccountId, String transactionTime, BigDecimal transactionAmount, int transactionStatus) {
+        this.transactionNo = transactionNo;
+        this.payAccountId = payAccountId;
+        this.recAccountId = recAccountId;
+        this.transactionTime = transactionTime;
+        this.transactionAmount = transactionAmount;
+        this.transactionStatus = transactionStatus;
+    }
+
     public String getTransactionNo() {
         return transactionNo;
     }
