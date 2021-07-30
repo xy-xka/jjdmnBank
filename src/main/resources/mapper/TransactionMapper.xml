@@ -4,4 +4,23 @@
 <mapper namespace="com.org.jjdmn.bank.persistence.TransactionMapper">
     <cache />
 
+    <select id="queryByCondition" resultType="com.org.jjdmn.bank.pojo.Transaction">
+        select * from 'transaction'
+            <where>
+                <if test="payAccountId!=null">
+                    and payAccountId=#{payAccountId}
+                </if>
+                <if test="recAccountId!=null">
+                    and recAccountId=#{recAccountId}
+                </if>
+                <if test="transactionTime!=null">
+                    and transactionTime=#{transactionTime}
+                </if>
+                <if test="transactionStatus!=null">
+                    and transactionStatus=#{transactionStatus}
+                </if>
+            </where>
+
+
+    </select>
 </mapper>
