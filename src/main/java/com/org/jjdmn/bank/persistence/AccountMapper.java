@@ -1,5 +1,7 @@
 package com.org.jjdmn.bank.persistence;
 
+import org.apache.ibatis.annotations.Mapper;
+
 /**
  * @PackageUrl com.org.jjdmn.bank.persistence
  * @ClassName AccountMapper
@@ -8,5 +10,6 @@ package com.org.jjdmn.bank.persistence;
  * @Date 2021/7/29
  * @Version 1.0
  **/
+@Mapper
 public interface AccountMapper {
 }
