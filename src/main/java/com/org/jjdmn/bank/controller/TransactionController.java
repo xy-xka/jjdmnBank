@@ -36,8 +36,9 @@ public class TransactionController {
     public String query(@Param("payAccountId") Long payAccountId,
                         @Param("recAccountId") Long recAccountId,
                         @Param("transactionTime") String transactionTime,
-                        @Param("transactionStatus") int transactionStatus){
-        Transaction con = new Transaction(null,payAccountId, recAccountId, transactionTime,null, transactionStatus);
+                        @Param("transactionStatus") String transactionStatus){
+        int status = transactionStatus == "" ?  0:Integer.parseInt(transactionStatus) ;
+        Transaction con = new Transaction(null,payAccountId, recAccountId, transactionTime,null, status );
         List<Transaction> transactions = service.getTransactionList(con);
 
         transactions.forEach(System.out::println);
