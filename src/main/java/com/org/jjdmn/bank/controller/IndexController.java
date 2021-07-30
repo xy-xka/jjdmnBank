@@ -25,5 +25,28 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/home")
+    public String viewHome(){
+
+        return "home";
+    }
+
+    @GetMapping("/information")
+    public String viewInfo(){
+
+        return "information";
+    }
+
+    @GetMapping("/test")
+    public String viewTest(){
+
+        return "test";
+    }
+
+    @GetMapping("/transfer")
+    public String viewTransfer(){
+
+        return "transfer";
+    }
 
 }
