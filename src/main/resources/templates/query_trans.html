@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ch" xml:th="http://www.thymeleaf.org">
+<html lang="ch" xml:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
-<form action="/tran/query" method="post">
+<form action="/tran/query2?pageNum=1" method="post">
     付款账户：<input type="text" name="payAccountId"/><br>
     收款账户：<input type="text" name="recAccountId"/><br>
     交易日期：<input type="date" name="transactionTime"/><br>
@@ -14,5 +15,68 @@
     <input type="submit" value="提交"/>
 </form>
 
+<form method="post" id="queryForm">
+    付款账户：<input type="text" name="payAccountId" /><br>
+    收款账户：<input type="text" name="recAccountId"/><br>
+    交易日期：<input type="date" name="transactionTime"/><br>
+    状态：<input type="text" name="transactionStatus"/><br>
+    <input type="button" value="提交" onclick="query()"/>
+</form>
+<table id="queryTable">
+    <thead>
+    <tr>
+        <th>交易流水号</th>
+        <th>付款账户</th>
+        <th>收款账户</th>
+        <th>交易时间</th>
+        <th>交易金额</th>
+        <th>交易状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+
+    function query() {
+        var queryData = $("#queryForm").serializeArray();
+        var queryPram = {};
+        var $tbody = $("#queryTable").find("tbody");
+
+        for(var i = 0;i<queryData.length;i++){
+            queryPram[queryData[i].name] = queryData[i]['value'];
+        }
+        $.ajax({
+            type: "post",
+            contentType: "application/json;charset=UTF-8",
+            url: "/tran/query",
+            data: JSON.stringify(queryPram),
+            success: function (respon) {
+                var content= respon.data;
+                console.log(content);
+                for(var c = 0; c < content.length; c++) {
+                    //遍历所有列
+                    var cols = [];
+
+                        $.each(content[c], function (key2, value2) {
+
+                            cols.push(value2);
+
+                        });
+                    var html = "<tr>";
+                    $.each(cols, function (k, v) {
+                        html += "<td>" + v + "</td>"
+                    });
+                    html += "</tr>";
+                    $tbody.append(html);
+                }
+                //alert("成功");
+            },
+            error: function (errorMsg) {
+                alert("失败");
+            }
+        })
+    }
+</script>
 </body>
 </html>
