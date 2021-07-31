@@ -37,15 +37,18 @@
     </tbody>
 </table>
 <script>
-
+    var curPageNum = 1;
     function query() {
+
         var queryData = $("#queryForm").serializeArray();
         var queryPram = {};
         var $tbody = $("#queryTable").find("tbody");
 
+        $tbody.empty();
         for(var i = 0;i<queryData.length;i++){
             queryPram[queryData[i].name] = queryData[i]['value'];
         }
+        queryPram["pageNum"] = curPageNum;
         $.ajax({
             type: "post",
             contentType: "application/json;charset=UTF-8",

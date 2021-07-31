@@ -37,38 +37,30 @@ public class TransactionController {
         return "query_trans";
     }
 
-//    //查询流水
-//    @RequestMapping(value = "/query", method = RequestMethod.POST)
-//    public String query(HttpServletRequest request){
-//        long pay = request.getParameter("payAccountId").equals("") ?  0: Long.parseLong(request.getParameter("payAccountId")) ;
-//        long rec = request.getParameter("recAccountId").equals("") ?  0:  Long.parseLong(request.getParameter("recAccountId"));
-//        int status = request.getParameter("transactionStatus").equals("") ?
-//                0: Integer.parseInt(request.getParameter("transactionStatus")) ;
-//        Transaction con = new Transaction(null,pay, rec,
-//                request.getParameter("transactionTime"),null, status );
-//        List<Transaction> transactions = service.getTransactionList(con);
-//
-//        //transactions.forEach(System.out::println);
-//        HttpSession session = request.getSession();
-//        session.setAttribute("transactions",transactions);
-//        return "success";
-//    }
-
     //查询流水
     @ResponseBody
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public ResponBean<Transaction> query(@RequestBody Map<String,String> map){
-//        System.out.println(map.toString());
-//        System.out.println(map.get("payAccountId"));
         long pay = map.get("payAccountId").equals("") ?  0: Long.parseLong(map.get("payAccountId")) ;
         long rec = map.get("recAccountId").equals("") ?  0:  Long.parseLong(map.get("recAccountId"));
         int status = map.get("transactionStatus").equals("") ?
                 0: Integer.parseInt(map.get("transactionStatus")) ;
+        int pageNum = Integer.parseInt(map.get("pageNum"));
         Transaction con = new Transaction(null,pay, rec,
                 map.get("transactionTime"),null, status );
         System.out.println(con.toString());
 
-        List<Transaction> transactions = service.getTransactionList(con);
+        int totalNum = service.getTransactionNum(con);//查询一共有多少条数据
+        int pageSize = 2;
+        int totalPages = totalNum/pageSize;
+
+        if(pageNum > totalPages){
+            pageNum = totalPages;
+        }
+        if(pageNum <= 0)
+            pageNum=1;
+
+        List<Transaction> transactions = service.getTransactionLimitList(con,pageNum,pageSize);
         ResponBean<Transaction> respon = new ResponBean<>(transactions);
         return respon;
     }
