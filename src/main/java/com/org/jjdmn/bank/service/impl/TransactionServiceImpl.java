@@ -1,5 +1,6 @@
 package com.org.jjdmn.bank.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.org.jjdmn.bank.persistence.TransactionMapper;
 import com.org.jjdmn.bank.persistence.UserMapper;
 import com.org.jjdmn.bank.pojo.Transaction;
@@ -27,5 +28,14 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getTransactionList(Transaction condition) {
         return transactionMapper.queryByCondition(condition);
+    }
+    @Override
+    public List<Transaction> getTransactionLimitList(Transaction condition, int pageNumber, int pageSize) {
+        PageHelper.startPage(pageNumber,pageSize);
+        return transactionMapper.queryByCondition(condition);
+    }
+    @Override
+    public int getTransactionNum(Transaction condition){
+        return transactionMapper.countNumber(condition);
     }
 }

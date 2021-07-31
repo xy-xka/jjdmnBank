@@ -32,10 +32,16 @@ public class TransactionController {
     @Autowired
     HttpServletRequest request;
 
+
     //查询界面
     @GetMapping("/toQuery")
     public String viewForm(){
         return "query_trans";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
     }
 
     //查询流水

@@ -17,4 +17,6 @@ import java.util.List;
 @Service
 public interface TransactionService {
     List<Transaction> getTransactionList(Transaction condition);  // 根据组合条件查询交易记录
+    List<Transaction> getTransactionLimitList(Transaction condition, int pageNumber, int pageSize);  //分页查询
+    int getTransactionNum(Transaction condition);
 }

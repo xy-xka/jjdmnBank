@@ -20,7 +20,23 @@
                     and transactionStatus=#{transactionStatus}
                 </if>
             </where>
+    </select>
 
-
+    <select id="countNumber" resultType="java.lang.Integer">
+        select count(*) from transaction
+        <where>
+            <if test="payAccountId!=0">
+                and payAccountId=#{payAccountId}
+            </if>
+            <if test="recAccountId!=0">
+                and recAccountId=#{recAccountId}
+            </if>
+            <if test="transactionTime!=''">
+                and transactionTime like CONCAT(#{transactionTime},'%')
+            </if>
+            <if test="transactionStatus!=0">
+                and transactionStatus=#{transactionStatus}
+            </if>
+        </where>
     </select>
 </mapper>

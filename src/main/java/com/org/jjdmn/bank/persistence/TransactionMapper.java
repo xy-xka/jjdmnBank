@@ -18,5 +18,6 @@ import java.util.List;
 @Mapper
 public interface TransactionMapper {
     List<Transaction> queryByCondition(Transaction transaction);
+    int countNumber(Transaction transaction);
 }
 
