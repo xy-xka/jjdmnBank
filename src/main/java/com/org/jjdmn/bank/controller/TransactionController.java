@@ -39,7 +39,7 @@ public class TransactionController {
 
     //查询流水
     @ResponseBody
-    @RequestMapping(value = "/query", method = RequestMethod.POST)
+    @RequestMapping(value = "/query", method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     public ResponBean<Transaction> query(@RequestBody Map<String,String> map){
         long pay = map.get("payAccountId").equals("") ?  0: Long.parseLong(map.get("payAccountId")) ;
         long rec = map.get("recAccountId").equals("") ?  0:  Long.parseLong(map.get("recAccountId"));
