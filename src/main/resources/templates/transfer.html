@@ -125,10 +125,10 @@
             contentType: "application/json;charset=UTF-8",
             url: "/account/transfering",
             data: JSON.stringify(queryPram),
-            success: function () {
-
+            success: function (data) {
+                window.location.href="/home";
             },
-            error: function () {
+            error: function (data) {
                 alert("失败");
             }
         })

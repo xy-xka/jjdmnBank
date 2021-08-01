@@ -5,6 +5,8 @@ import com.org.jjdmn.bank.pojo.Respon.ResponBean;
 import com.org.jjdmn.bank.pojo.Transaction;
 import com.org.jjdmn.bank.service.TransactionService;
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +24,12 @@ import java.util.Map;
  * @Date 2021/7/29
  * @Version 1.0
  **/
+
 @Controller
 @RequestMapping("tran")
 public class TransactionController {
 
+    private static final Logger logger  = LoggerFactory.getLogger(TransactionController.class);
     @Autowired
     private TransactionService service;
 
@@ -61,8 +65,10 @@ public class TransactionController {
                 map.get("transactionTime"),null, status );
         System.out.println(con.toString());
 
+        logger.info(con.toString());
+
         double totalNum = service.getTransactionNum(con);//查询一共有多少条数据
-        double pageSize = 2;
+        double pageSize = 5;
         int totalPages = (int)Math.ceil(totalNum/pageSize);
 
         if(pageNum > totalPages){
