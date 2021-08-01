@@ -174,7 +174,15 @@
 
                     $.each(content[c], function (key2, value2) {
 
-                        cols.push(value2);
+                        if(key2=="transactionStatus"){
+                            if(value2==1)
+                                cols.push("成功");
+                            if(value2==2)
+                                cols.push("失败");
+                            if(value2==3)
+                                cols.push("待处理")
+                        }else
+                            cols.push(value2);
 
                     });
                     var html = "<tr>";
