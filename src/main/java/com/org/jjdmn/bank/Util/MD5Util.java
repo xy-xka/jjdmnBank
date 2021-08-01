@@ -7,7 +7,8 @@ public class MD5Util {
 	public static String md5(String src) {
 		return DigestUtils.md5Hex(src);
 	}
-	
+
+
 	private static final String salt = "1a2b3c4d";
 	
 	public static String inputPassToFormPass(String inputPass) {

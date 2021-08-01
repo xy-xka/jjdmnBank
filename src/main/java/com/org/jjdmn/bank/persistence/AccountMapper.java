@@ -51,4 +51,6 @@ public interface AccountMapper {
     public int saveTransection(@Param("transactionNo") String transactionNo, @Param("payAccountId") long payAccountId, @Param("recAccountId") long recAccountId, @Param("transactionTime") String transactionTime, @Param("transactionAmount") BigDecimal transactionAmount, @Param("transactionStatus") int transactionStatus);
 
 
+
+    Account getAccountById(@Param("accountId") long accountId);
 }
