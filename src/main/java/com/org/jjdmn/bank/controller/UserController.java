@@ -2,6 +2,7 @@ package com.org.jjdmn.bank.controller;
 
 import com.org.jjdmn.bank.pojo.Account;
 import com.org.jjdmn.bank.pojo.User;
+import com.org.jjdmn.bank.service.AccountService;
 import com.org.jjdmn.bank.service.impl.UserServiceImpl;
 import com.org.jjdmn.bank.vo.LoginVo;
 import com.org.jjdmn.bank.vo.ResultVo;
@@ -26,8 +27,12 @@ import java.util.List;
  **/
 @Controller
 public class UserController {
+
     @Autowired
     UserServiceImpl userService;
+
+    @Autowired
+    AccountService accountService;
 
     @RequestMapping("/")
     public String toLogin(){
@@ -45,7 +50,7 @@ public class UserController {
         ResultVo result = new ResultVo().success(user);
         request.getSession().setAttribute("user",result);
         System.out.println(user.toString());
-        request.getSession().setAttribute("accountList",new ArrayList<Account>());
+        request.getSession().setAttribute("accountList",accountService.getAcountListService(result.getUserId()));
         return result;
     }
 

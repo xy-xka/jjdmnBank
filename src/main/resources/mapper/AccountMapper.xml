@@ -4,4 +4,22 @@
 <mapper namespace="com.org.jjdmn.bank.persistence.AccountMapper">
     <cache />
 
+<!--    查询用户的所有账号-->
+    <select id="queryAccountList" parameterType="long" resultType="com.org.jjdmn.bank.pojo.Account">
+        select * from account where userId = #{userId}
+    </select>
+
+<!--    付款账号减去转账金额-->
+    <update id="transferPay">
+        update account set balance=balance - #{amount} where accountId = #{payAccountId}
+    </update>
+
+<!--    收款账号加上转账金额-->
+    <update id="transferRec">
+        update account set balance=balance + #{amount} where accountId = #{recAccountId}
+    </update>
+
+    <insert id="saveTransection">
+        insert into transaction(transactionNo, payAccountId, recAccountId, transactionTime, transactionAmount, transactionStatus) VALUES(#{transactionNo}, #{payAccountId}, #{recAccountId}, #{transactionTime}, #{transactionAmount}, #{transactionStatus})
+    </insert>
 </mapper>
