@@ -114,6 +114,20 @@
 <script src="js/jquery-form.js"></script>
 <script src="js/transfer.js"></script>
 <script>
+
+    $("#amount").change(function(){
+        var reg = /^[0-9]+(.[0-9]{0,2})?$/;
+        if(!reg.test($(this).val())){
+            $(this).val('');
+            alert("输入转账金额非法")
+        }
+
+    });
+
+
+
+
+
     function transfer(){
 
         var queryData = $("#transferForm").serializeArray();
