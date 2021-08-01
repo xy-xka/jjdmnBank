@@ -102,11 +102,11 @@
             </fieldset>
 
 
-            <span style="font-family: 宋体, Times, serif;font-size: 20px;font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您的银行卡交易明细如下：</span>
+            <span style="font-family: 宋体, Times, serif;font-size: 20px;font-weight: bold" th:text="${session.user.getUsername()}+'    您的银行卡交易明细如下：'"></span>
             <br>
             <table class="layui-table" id="queryTable">
                 <thead>
-                <tr>
+                <tr >
                     <th>流水号</th>
                     <th>付款账户</th>
                     <th>收款账户</th>
@@ -115,7 +115,7 @@
                     <th>交易状态</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="layui-table-body">
                 </tbody>
             </table>
 
@@ -124,8 +124,8 @@
                 <div>
                     <div style="text-align: center">
                         <label class="form-control-label" id="totalnum"></label>
-                        <label class="form-control-label">跳转至第</label>
-                        <input type="text" id="pagenum" name="pagenum" style="width:20px">
+                        <label class="form-control-label">&nbsp;跳转至第&nbsp;&nbsp;</label>
+                        <input class="layui-text" type="text" id="pagenum" name="pagenum" style="width:20px" value="1">
                         <label class="form-control-label">页</label>
                     </div>
                     <div style="text-align: center">

@@ -1,9 +1,13 @@
 package com.org.jjdmn.bank.controller;
 
+import com.org.jjdmn.bank.Util.TransferFailList;
+import com.org.jjdmn.bank.bankEnum.TransferEnum;
+import com.org.jjdmn.bank.pojo.Respon.ResponBean;
 import com.org.jjdmn.bank.pojo.User;
 import com.org.jjdmn.bank.service.AccountService;
 
 import com.org.jjdmn.bank.vo.ResultVo;
+import com.org.jjdmn.bank.vo.TranferVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -14,9 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.temporal.TemporalAmount;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @PackageUrl com.org.jjdmn.bank.controller
@@ -38,8 +40,9 @@ public class AccountController {
     @Autowired
     HttpServletRequest request;
 
+    @ResponseBody
     @RequestMapping(value = "/transfering", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    public String transfering(@RequestBody Map<String, String> map) {
+    public TranferVo transfering(@RequestBody Map<String, String> map) {
 
         for (Map.Entry<String, String> entry : map.entrySet()) {
             System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
@@ -52,22 +55,29 @@ public class AccountController {
 
         long userId = ((ResultVo) request.getSession().getAttribute("user")).getUserId();
 
+        TranferVo vo = new TranferVo();
+
         //校验付款账户
         if (accountService.getAcountListService(userId).stream().anyMatch(account -> account.getAccountId() == payAccount)) {
 
+             vo = accountService.transferCheck(payAccount, recAccount, payPassword, amount);
             //转账校验
-            if (!accountService.transferCheck(payAccount, recAccount, payPassword, amount).isFlag()) {
-                return "transfer";
+            if (vo.getCode()!= TransferEnum.tranferSuccess.getCode()) {
+                System.out.println(vo);
+                return vo;//校验失败
             }
             //转账
             if (accountService.doTransfer(payAccount, recAccount, amount) == 1) {
                 request.getSession().setAttribute("accountList",accountService.getAcountListService(userId));
-                return "home";
+                return vo;
             }
-
-            return "home";
+            vo.setCode(TransferEnum.transferFailed.getCode());
+            vo.setMsg(TransferEnum.transferFailed.getDesc());
+            return vo;
         }
-        return "transfer";
+        vo.setCode(TransferEnum.accNotBelongUser.getCode());
+        vo.setMsg(TransferEnum.accNotBelongUser.getDesc());
+        return vo;
     }
 }
 

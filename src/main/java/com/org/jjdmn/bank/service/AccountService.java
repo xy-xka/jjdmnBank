@@ -1,8 +1,7 @@
 package com.org.jjdmn.bank.service;
 
-import com.org.jjdmn.bank.Util.TransferFailList;
 import com.org.jjdmn.bank.pojo.Account;
-import com.org.jjdmn.bank.pojo.User;
+import com.org.jjdmn.bank.vo.TranferVo;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,14 +22,5 @@ public interface AccountService {
 
     int doTransfer(long payAccount, long recAcount, BigDecimal amount);
 
-    public TransferFailList transferCheck(long payAccount, long recAccount, String password, BigDecimal amount);
-//
-//    TransferFailList transferCheck(Map<String, Object> map);
-//
-//    boolean transferAcount(Map<String, Object> map);
-//
-//
-//    void saveTransctionSerial(String uuid, BigInteger payAccount, BigInteger recAccount, String time, BigDecimal amount, boolean status);
-
-
+    TranferVo transferCheck(long payAccount, long recAccount, String password, BigDecimal amount);
 }
