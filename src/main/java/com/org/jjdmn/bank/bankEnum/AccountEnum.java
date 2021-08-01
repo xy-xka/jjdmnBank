@@ -1,5 +1,7 @@
 package com.org.jjdmn.bank.bankEnum;
 
+import java.io.Serializable;
+
 /**
  * @PackageUrl com.org.jjdmn.bank.bankEnum
  * @ClassName AccountEnum
@@ -8,7 +10,9 @@ package com.org.jjdmn.bank.bankEnum;
  * @Date 2021/7/30
  * @Version 1.0
  **/
-public enum AccountEnum {
+public enum AccountEnum implements Serializable {
+
+
 
     //正常账户
     normal(1,"正常"),

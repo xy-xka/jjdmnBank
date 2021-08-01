@@ -92,29 +92,30 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public TransferFailList transferCheck(long payAccount, long recAccount, String password, BigDecimal amount) {
+    public TransferFailList transferCheck(long payAccountId, long recAccountId, String password, BigDecimal amount) {
 
+        System.out.println("开始校验");
 
         TransferFailList failList = new TransferFailList();
-//        String payPassword = accountMapper.getAccountPasswordByAccountId(long payAccount);
-//
-//
-//
-//        // 校验支付密码
-//        if(!accountMapper.checkPayAccountAndPassword(new BigInteger(map.get("userId").toString()), map.get("password").toString())){
-//            failList.addFail("密码错误");
-//        }
-//        // 校验对方账户是否存在以及是否正常
-//        if(mapper.checkRecUseridAndAccount(new BigInteger(map.get("recUserId").toString()), new BigInteger(map.get("recAccount").toString()))){
-//            failList.addFail("对方用户名/账户错误");
-//        }
-//
-//        // 校验账户余额
-//        BigDecimal balance = mapper.getBalance((long) map.get("accountId"));
-//        if(new BigDecimal(map.get("amount").toString()).compareTo(balance) == -1){
-//            failList.addFail("余额不足");
-//        }
-//        System.out.println("转账前校验");
+
+        Account payAccount = accountMapper.getAccountById(payAccountId);
+        Account recAccount = accountMapper.getAccountById(recAccountId);
+        // 校验支付密码
+        if (!password.equals(payAccount.getPayPwd())) {
+            failList.addFail("密码错误");
+            System.out.println("密码错误");
+        }
+
+        // 校验对方账户状态
+        if (recAccount.getAccountStatus() != 1){
+            failList.addFail("对方账户异常或不存在");
+            System.out.println("对方账户异常");
+        }
+
+        if (amount.compareTo(payAccount.getBalance()) > 0){
+            failList.addFail("账户余额不足");
+            System.out.println("账户余额不足");
+        }
 
         return failList;
     }

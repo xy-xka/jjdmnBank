@@ -22,4 +22,9 @@
     <insert id="saveTransection">
         insert into transaction(transactionNo, payAccountId, recAccountId, transactionTime, transactionAmount, transactionStatus) VALUES(#{transactionNo}, #{payAccountId}, #{recAccountId}, #{transactionTime}, #{transactionAmount}, #{transactionStatus})
     </insert>
+
+    <select id="getAccountById" parameterType="long" resultType="com.org.jjdmn.bank.pojo.Account">
+        select * from account where accountId = #{accountId}
+    </select>
+
 </mapper>
