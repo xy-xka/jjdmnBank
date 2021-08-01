@@ -1,6 +1,9 @@
 package com.org.jjdmn.bank.persistence;
 
+import com.org.jjdmn.bank.pojo.Account;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @PackageUrl com.org.jjdmn.bank.persistence
@@ -12,4 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  **/
 @Mapper
 public interface AccountMapper {
+    List<Account> getAccountListByUserId(long userId);
+
+
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>银行转账系统-转账业务</title>
@@ -56,12 +56,12 @@
                     <tr>
                         <th>卡号</th>
                         <th>余额</th>
-                        <th>所属银行</th>
+
                     </tr>
-                    <tr th:each = "i:${bankcards}">
-                        <td th:text = "${i.cardnum}"></td>
-                        <td th:text = "${i.balance}"></td>
-                        <td th:text = "${i.bname}"></td>
+                    <tr th:each = "i:${session.accountList}">
+                        <td th:text = "${i.getAccountId()}"></td>
+                        <td th:text = "${i.getBalance()}"></td>
+
                     </tr>
 
                 </table>

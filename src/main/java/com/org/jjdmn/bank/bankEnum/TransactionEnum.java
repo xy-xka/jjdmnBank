@@ -11,13 +11,13 @@ package com.org.jjdmn.bank.bankEnum;
 public enum TransactionEnum {
 
     // 转账成功
-    success(1,"转账成功"),
+    success(1,"成功"),
 
     //转账失败
-    fail(2,"转账失败"),
+    fail(2,"失败"),
 
     //银行处理
-    handler(3,"银行处理");
+    handler(3,"待处理");
 
 
     private Integer code;  //状态码

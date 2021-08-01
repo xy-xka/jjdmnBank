@@ -1,5 +1,6 @@
 package com.org.jjdmn.bank.controller;
 
+import com.org.jjdmn.bank.bankEnum.TransactionEnum;
 import com.org.jjdmn.bank.pojo.Respon.ResponBean;
 import com.org.jjdmn.bank.pojo.Transaction;
 import com.org.jjdmn.bank.service.TransactionService;
@@ -41,18 +42,28 @@ public class TransactionController {
     @ResponseBody
     @RequestMapping(value = "/query", method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     public ResponBean<Transaction> query(@RequestBody Map<String,String> map){
-        long pay = map.get("payAccountId").equals("") ?  0: Long.parseLong(map.get("payAccountId")) ;
-        long rec = map.get("recAccountId").equals("") ?  0:  Long.parseLong(map.get("recAccountId"));
-        int status = map.get("transactionStatus").equals("") ?
-                0: Integer.parseInt(map.get("transactionStatus")) ;
+        long pay = "".equals(map.get("payAccountId")) ?  0: Long.parseLong(map.get("payAccountId")) ;
+        long rec = "".equals(map.get("recAccountId")) ?  0:  Long.parseLong(map.get("recAccountId"));
+        int status = 0;
+
+        System.out.println(map.get("transactionStatus"));
+        System.out.println(TransactionEnum.success.getDesc());
+        System.out.println(map.get("transactionStatus").equals(TransactionEnum.success.getDesc()));
+
+        if(map.get("transactionStatus").equals(TransactionEnum.success.getDesc()))
+            status = TransactionEnum.success.getCode();
+        if(map.get("transactionStatus").equals(TransactionEnum.fail.getDesc()))
+            status = TransactionEnum.fail.getCode();
+        if(map.get("transactionStatus").equals(TransactionEnum.handler.getDesc()))
+            status = TransactionEnum.handler.getCode();
         int pageNum = Integer.parseInt(map.get("pageNum"));
         Transaction con = new Transaction(null,pay, rec,
                 map.get("transactionTime"),null, status );
         System.out.println(con.toString());
 
-        int totalNum = service.getTransactionNum(con);//查询一共有多少条数据
-        int pageSize = 2;
-        int totalPages = totalNum/pageSize;
+        double totalNum = service.getTransactionNum(con);//查询一共有多少条数据
+        double pageSize = 2;
+        int totalPages = (int)Math.ceil(totalNum/pageSize);
 
         if(pageNum > totalPages){
             pageNum = totalPages;
@@ -60,8 +71,10 @@ public class TransactionController {
         if(pageNum <= 0)
             pageNum=1;
 
-        List<Transaction> transactions = service.getTransactionLimitList(con,pageNum,pageSize);
+        List<Transaction> transactions = service.getTransactionLimitList(con,pageNum,(int)pageSize);
+        System.out.println(transactions);
         ResponBean<Transaction> respon = new ResponBean<>(transactions);
+        respon.setMsg(totalPages+"");
         return respon;
     }
 

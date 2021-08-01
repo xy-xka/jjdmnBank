@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#query").on('click',function(message){
-        window.location.href='/information?pagenum=1';
+        window.location.href='/transaction';
         return false;
     });
 

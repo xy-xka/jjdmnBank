@@ -1,5 +1,6 @@
 package com.org.jjdmn.bank.controller;
 
+import com.org.jjdmn.bank.pojo.Account;
 import com.org.jjdmn.bank.pojo.User;
 import com.org.jjdmn.bank.service.impl.UserServiceImpl;
 import com.org.jjdmn.bank.vo.LoginVo;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @PackageUrl com.org.jjdmn.bank.controller
@@ -42,7 +45,7 @@ public class UserController {
         ResultVo result = new ResultVo().success(user);
         request.getSession().setAttribute("user",result);
         System.out.println(user.toString());
-        //   User user1 = (User)request.getSession().getAttribute("user");
+        request.getSession().setAttribute("accountList",new ArrayList<Account>());
         return result;
     }
 

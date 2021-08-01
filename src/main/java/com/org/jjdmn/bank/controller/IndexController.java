@@ -31,10 +31,10 @@ public class IndexController {
         return "home";
     }
 
-    @GetMapping("/information")
+    @GetMapping("/transaction")
     public String viewInfo(){
 
-        return "information";
+        return "transaction";
     }
 
     @GetMapping("/test")

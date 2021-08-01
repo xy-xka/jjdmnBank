@@ -1,5 +1,6 @@
 package com.org.jjdmn.bank.service;
 
+import com.org.jjdmn.bank.pojo.User;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,4 +13,6 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public interface AccountService {
+    boolean checkPayAccount(User user, long accountId);
+
 }
