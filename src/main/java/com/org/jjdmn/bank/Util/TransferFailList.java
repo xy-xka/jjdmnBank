@@ -14,11 +14,11 @@ public class TransferFailList {
     private boolean flag = true;
 
     // 错误列表, 表单中错误数据的名,每次出现错误,将错误名存入,用于最后返回给前端展示
-    private List<String> errorList;
+    private String error;
 
     public void addFail(String failMassage){
         flag = false;
-        errorList.add(failMassage);
+        error = failMassage;
     }
 
     public boolean isFlag() {
@@ -29,11 +29,11 @@ public class TransferFailList {
         this.flag = flag;
     }
 
-    public List<String> getErrorList() {
-        return errorList;
+    public String getError() {
+        return error;
     }
 
-    public void setErrorList(List<String> errorList) {
-        this.errorList = errorList;
+    public void setError(String error) {
+        this.error = error;
     }
 }

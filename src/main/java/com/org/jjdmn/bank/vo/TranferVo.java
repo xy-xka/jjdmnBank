@@ -9,18 +9,8 @@ package com.org.jjdmn.bank.vo;
  * @Version 1.0
  **/
 public class TranferVo {
-    private int code;      //状态码
-    private String msg;    //返回消息
-
-    public TranferVo(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-
-    public TranferVo() {
-
-    }
-
+    private int code = 1;      //状态码
+    private String msg = "成功";    //返回消息
 
     public int getCode() {
         return code;
@@ -36,5 +26,13 @@ public class TranferVo {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return "TranferVo{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                '}';
     }
 }

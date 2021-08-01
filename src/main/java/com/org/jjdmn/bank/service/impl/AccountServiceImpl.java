@@ -1,11 +1,13 @@
 package com.org.jjdmn.bank.service.impl;
 
 import com.org.jjdmn.bank.Util.GetUuid;
-import com.org.jjdmn.bank.Util.TransferFailList;
+import com.org.jjdmn.bank.bankEnum.AccountEnum;
+import com.org.jjdmn.bank.bankEnum.TransferEnum;
 import com.org.jjdmn.bank.persistence.AccountMapper;
 import com.org.jjdmn.bank.pojo.Account;
 import com.org.jjdmn.bank.pojo.User;
 import com.org.jjdmn.bank.service.AccountService;
+import com.org.jjdmn.bank.vo.TranferVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -42,8 +44,8 @@ public class AccountServiceImpl implements AccountService {
 
 
 
-
-    public int doTransfer(long payAccount, long recAcount, BigDecimal amount){
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false)
+    public synchronized int  doTransfer(long payAccount, long recAcount, BigDecimal amount){
 
         System.out.println("开始转账");
 
@@ -66,9 +68,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, readOnly = false)
     public void transferring(long payAccount, long recAccount, BigDecimal amount, SuccessFlag transectionstatus) {
-
-//        System.out.println("开始转账!!!");
-//        System.out.println(amount);
         accountMapper.transferPay(payAccount, amount);
         accountMapper.transferRec(recAccount, amount);
         transectionstatus.setFlag(true);
@@ -92,32 +91,42 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public TransferFailList transferCheck(long payAccountId, long recAccountId, String password, BigDecimal amount) {
+    public TranferVo transferCheck(long payAccountId, long recAccountId, String password, BigDecimal amount) {
 
         System.out.println("开始校验");
 
-        TransferFailList failList = new TransferFailList();
+
+        TranferVo vo = new TranferVo();
 
         Account payAccount = accountMapper.getAccountById(payAccountId);
+
         Account recAccount = accountMapper.getAccountById(recAccountId);
+        if(recAccount==null){
+            vo.setCode(TransferEnum.recAccNotExist.getCode());
+            vo.setMsg(TransferEnum.recAccNotExist.getDesc());
+            return vo;
+        }
+
+
         // 校验支付密码
         if (!password.equals(payAccount.getPayPwd())) {
-            failList.addFail("密码错误");
-            System.out.println("密码错误");
+            vo.setCode(TransferEnum.passwordError.getCode());
+            vo.setMsg(TransferEnum.passwordError.getDesc());
+            return vo;
         }
 
         // 校验对方账户状态
-        if (recAccount.getAccountStatus() != 1){
-            failList.addFail("对方账户异常或不存在");
-            System.out.println("对方账户异常");
+        if (recAccount.getAccountStatus() != AccountEnum.normal.getCode()){
+            vo.setCode(AccountEnum.frozen.getCode());
+            vo.setMsg("对方账户异常");
+            return vo;
         }
 
         if (amount.compareTo(payAccount.getBalance()) > 0){
-            failList.addFail("账户余额不足");
-            System.out.println("账户余额不足");
+            vo.setCode(TransferEnum.balanceNotEnough.getCode());
+            vo.setMsg(TransferEnum.balanceNotEnough.getDesc());
+            return vo;
         }
-
-        return failList;
+        return vo;
     }
-
 }

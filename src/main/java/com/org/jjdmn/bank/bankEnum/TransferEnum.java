@@ -10,6 +10,7 @@ package com.org.jjdmn.bank.bankEnum;
  **/
 public enum TransferEnum {
 
+    transferFailed(0, "失败"),
     //转账成功
     tranferSuccess(1,"成功"),
 
