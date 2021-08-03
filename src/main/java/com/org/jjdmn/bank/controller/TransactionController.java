@@ -50,9 +50,7 @@ public class TransactionController {
         long rec = "".equals(map.get("recAccountId")) ?  0:  Long.parseLong(map.get("recAccountId"));
         int status = 0;
 
-        System.out.println(map.get("transactionStatus"));
-        System.out.println(TransactionEnum.success.getDesc());
-        System.out.println(map.get("transactionStatus").equals(TransactionEnum.success.getDesc()));
+
 
         if(map.get("transactionStatus").equals(TransactionEnum.success.getDesc()))
             status = TransactionEnum.success.getCode();

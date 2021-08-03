@@ -20,6 +20,7 @@
                     and transactionStatus=#{transactionStatus}
                 </if>
             </where>
+             order by transactionTime desc
     </select>
 
     <select id="countNumber" resultType="java.lang.Integer">
@@ -38,5 +39,6 @@
                 and transactionStatus=#{transactionStatus}
             </if>
         </where>
+        order by transactionTime desc
     </select>
 </mapper>
